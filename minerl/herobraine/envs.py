@@ -15,6 +15,8 @@ from minerl.herobraine.wrappers import Obfuscated, Vectorized
 from minerl.herobraine.env_specs import basalt_specs
 import os
 
+from minerl.herobraine.env_specs.chest_clock_specs import ChestClock
+
 # Must load non-obfuscated envs first!
 # Publish.py depends on this order for black-listing streams
 MINERL_TREECHOP_V0 = Treechop()
@@ -33,6 +35,12 @@ MINERL_BASALT_FIND_CAVES_ENV_SPEC = basalt_specs.FindCaveEnvSpec()
 MINERL_BASALT_MAKE_WATERFALL_ENV_SPEC = basalt_specs.MakeWaterfallEnvSpec()
 MINERL_BASALT_PEN_ANIMALS_VILLAGE_ENV_SPEC = basalt_specs.PenAnimalsVillageEnvSpec()
 MINERL_BASALT_VILLAGE_HOUSE_ENV_SPEC = basalt_specs.VillageMakeHouseEnvSpec()
+
+MINERL_CHEST_CLOCK_0_V0 = ChestClock(version=0, stop_early=False)
+
+MINERL_CHEST_CLOCK_NO_NOISE_0_V0 = ChestClock(version=0, stop_early=False, noisy=False)
+
+MINERL_CHEST_CLOCK_EARLY_STOP_0_V0 = ChestClock(version=0, stop_early=True)
 
 # Register the envs.
 ENVS = [env for env in locals().values() if isinstance(env, EnvSpec)]

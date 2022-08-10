@@ -7,9 +7,10 @@ coloredlogs.install(logging.DEBUG)
 
 def test_turn(resolution):
     #env = HumanSurvival(resolution=resolution).make()
-    #env = gym.make("MineRLBasaltBuildVillageHouse-v0")
     env = gym.make("MyMapLocalize-v0")
+    #env = gym.make("MineRLTreechop-v0")
     #env = gym.make("MineRLBasaltFindCave-v0")
+
     env.reset()
     _, _, _, info = env.step(env.action_space.noop())
     N = 100
@@ -22,6 +23,3 @@ def test_turn(resolution):
 
 if __name__ == '__main__':
     test_turn((640, 360))
-
-
-

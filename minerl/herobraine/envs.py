@@ -13,6 +13,7 @@ from minerl.herobraine.env_specs.navigate_specs import Navigate
 from minerl.herobraine.env_specs.obtain_specs import ObtainDiamondShovelEnvSpec
 from minerl.herobraine.wrappers import Obfuscated, Vectorized
 from minerl.herobraine.env_specs import basalt_specs
+from minerl.herobraine.env_specs.map_localize_specs import MapLocalize
 import os
 
 # Must load non-obfuscated envs first!
@@ -33,6 +34,9 @@ MINERL_BASALT_FIND_CAVES_ENV_SPEC = basalt_specs.FindCaveEnvSpec()
 MINERL_BASALT_MAKE_WATERFALL_ENV_SPEC = basalt_specs.MakeWaterfallEnvSpec()
 MINERL_BASALT_PEN_ANIMALS_VILLAGE_ENV_SPEC = basalt_specs.PenAnimalsVillageEnvSpec()
 MINERL_BASALT_VILLAGE_HOUSE_ENV_SPEC = basalt_specs.VillageMakeHouseEnvSpec()
+
+#My custom specs
+MINERL_MAP_LOCALIZE_V0 = MapLocalize()
 
 # Register the envs.
 ENVS = [env for env in locals().values() if isinstance(env, EnvSpec)]

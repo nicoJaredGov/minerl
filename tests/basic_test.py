@@ -1,6 +1,8 @@
 import logging
 import gym
+import minerl
 from minerl.herobraine.env_specs.human_survival_specs import HumanSurvival
+from minerl.herobraine.env_specs.map_localize_specs import MapLocalize
 
 import coloredlogs
 coloredlogs.install(logging.DEBUG)

@@ -36,7 +36,7 @@ MINERL_BASALT_PEN_ANIMALS_VILLAGE_ENV_SPEC = basalt_specs.PenAnimalsVillageEnvSp
 MINERL_BASALT_VILLAGE_HOUSE_ENV_SPEC = basalt_specs.VillageMakeHouseEnvSpec()
 
 #My custom specs
-MINERL_MAP_LOCALIZE_V0 = MapLocalize()
+MINERL_MAP_LOCALIZE_V0 = MapLocalize("MyMapLocalize-v0", "map_localize")
 
 # Register the envs.
 ENVS = [env for env in locals().values() if isinstance(env, EnvSpec)]

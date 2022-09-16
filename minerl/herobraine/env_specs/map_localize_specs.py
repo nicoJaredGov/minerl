@@ -69,6 +69,7 @@ def _basalt_gym_entrypoint(
 
 
 BASALT_GYM_ENTRY_POINT = "minerl.herobraine.env_specs.map_localize_specs:_basalt_gym_entrypoint"
+TREECHOP_WORLD_GENERATOR_OPTIONS = """{"coordinateScale":684.412,"heightScale":684.412,"lowerLimitScale":512.0,"upperLimitScale":512.0,"depthNoiseScaleX":200.0,"depthNoiseScaleZ":200.0,"depthNoiseScaleExponent":0.5,"mainNoiseScaleX":80.0,"mainNoiseScaleY":160.0,"mainNoiseScaleZ":80.0,"baseSize":8.5,"stretchY":12.0,"biomeDepthWeight":1.0,"biomeDepthOffset":0.0,"biomeScaleWeight":1.0,"biomeScaleOffset":0.0,"seaLevel":1,"useCaves":false,"useDungeons":false,"dungeonChance":8,"useStrongholds":false,"useVillages":true,"useMineShafts":false,"useTemples":false,"useMonuments":false,"useMansions":false,"useRavines":false,"useWaterLakes":false,"waterLakeChance":4,"useLavaLakes":false,"lavaLakeChance":80,"useLavaOceans":false,"fixedBiome":4,"biomeSize":4,"riverSize":1,"dirtSize":33,"dirtCount":10,"dirtMinHeight":0,"dirtMaxHeight":256,"gravelSize":33,"gravelCount":8,"gravelMinHeight":0,"gravelMaxHeight":256,"graniteSize":33,"graniteCount":10,"graniteMinHeight":0,"graniteMaxHeight":80,"dioriteSize":33,"dioriteCount":10,"dioriteMinHeight":0,"dioriteMaxHeight":80,"andesiteSize":33,"andesiteCount":10,"andesiteMinHeight":0,"andesiteMaxHeight":80,"coalSize":17,"coalCount":20,"coalMinHeight":0,"coalMaxHeight":128,"ironSize":9,"ironCount":20,"ironMinHeight":0,"ironMaxHeight":64,"goldSize":9,"goldCount":2,"goldMinHeight":0,"goldMaxHeight":32,"redstoneSize":8,"redstoneCount":8,"redstoneMinHeight":0,"redstoneMaxHeight":16,"diamondSize":8,"diamondCount":1,"diamondMinHeight":0,"diamondMaxHeight":16,"lapisSize":7,"lapisCount":1,"lapisCenterHeight":16,"lapisSpread":16}"""
 
 
 class MapLocalize(HumanControlEnvSpec):
@@ -110,13 +111,15 @@ class MapLocalize(HumanControlEnvSpec):
     def create_observables(self):
         # Only POV
         obs_handler_pov = handlers.POVObservation(self.resolution)
-        return [obs_handler_pov]
+        curr_loc = handlers.ObservationFromCurrentLocation()
+        return [obs_handler_pov, curr_loc]
 
     def create_agent_start(self) -> List[handlers.Handler]:
         return super().create_agent_start() + [
             handlers.SimpleInventoryAgentStart(self.inventory),
             handlers.PreferredSpawnBiome(self.preferred_spawn_biome),
-            handlers.DoneOnDeath()
+            handlers.DoneOnDeath(),
+            handlers.SpawnInVillage()
         ]
 
     def create_agent_handlers(self) -> List[handlers.Handler]:
@@ -124,7 +127,7 @@ class MapLocalize(HumanControlEnvSpec):
 
     def create_server_world_generators(self) -> List[handlers.Handler]:
         # TODO the original biome forced is not implemented yet. Use this for now.
-        return [handlers.DefaultWorldGenerator(force_reset=True)]
+        return [handlers.FlatWorldGenerator(force_reset=True)]
 
     def create_server_quit_producers(self) -> List[handlers.Handler]:
         return [

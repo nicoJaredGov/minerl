@@ -13,11 +13,12 @@ def test_turn(resolution):
     env = gym.make("MyMapLocalize-v0")
     #env = gym.make("MineRLBasaltFindCave-v0")
     env.reset()
-    _, _, _, info = env.step(env.action_space.noop())
-    N = 100
+    obs, _, _, info = env.step(env.action_space.noop())
+    print(obs["location_stats"])
+    N = 1000
     for i in range(N):
         ac = env.action_space.noop()
-        ac['camera'] = [0.0, 360 / N]
+        ac['camera'] = [0.0, 2 * 360 / N]
         _, _, _, info = env.step(ac)
         env.render()
     env.close()
